@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiotaFlow - Diagramas Técnicos de Arquitectura</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'neutral',
+      themeVariables: {
+        fontFamily: 'system-ui, -apple-system, sans-serif',
+        primaryColor: '#059669',
+        primaryTextColor: '#ffffff',
+        primaryBorderColor: '#047857',
+        lineColor: '#0f766e',
+        secondaryColor: '#0284c7',
+        tertiaryColor: '#f1f5f9'
+      }
+    });
+  </script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      margin: 0;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #065f46;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #475569;
+      font-weight: 500;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      border: 1px solid #e2e8f0;
+    }
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 0;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    p {
+      color: #64748b;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+    .diagram-wrapper {
+      display: flex;
+      justify-content: center;
+      background: #fafafa;
+      padding: 25px;
+      border-radius: 14px;
+      border: 1px dashed #cbd5e1;
+      overflow-x: auto;
+    }
+    footer {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="badge">Open Payments Hackathon 2026</span>
+      <h1>BiotaFlow: Diagramas Visuales de Arquitectura</h1>
+      <p class="subtitle">Interledger Protocol (ILP) · GNAP RFC 9421 · ReFi & eCommerce B2B</p>
+    </header>
+
+    <!-- DIAGRAMA 1 -->
+    <div class="card">
+      <h2><span>🌱 1. Modelo de Negocio Circular</span></h2>
+      <p>Muestra cómo el capital internacional fluye hacia el campesino colombiano en COP, se transforma en cosecha sostenible con trazabilidad y retorna al inversor global mediante liquidación mayorista B2B.</p>
+      <div class="diagram-wrapper">
+        <div class="mermaid">
+flowchart TD
+    subgraph S1["1. Financiación Pre-Cosecha"]
+        A["Inversor / Backer Global (EUR/USD)"] -->|"Open Payments GNAP (Aporte Único o Recurring Grant)"| B["Parcela Campesino (COP)"]
+        B -->|"Siembra agroforestal & restauración ReFi"| C["Cosecha Sostenible Certificada"]
+    end
+
+    subgraph S2["2. Mercado Mayorista B2B"]
+        C -->|"Trazabilidad SCA & Origen"| D["Lotes en Marketplace BiotaFlow"]
+        E["Comprador / Tostador B2B"] -->|"Checkout Open Payments (ILP)"| D
+    end
+
+    subgraph S3["3. Reparto Atómico (Split Payout)"]
+        D -->|"Liquidación Instantánea"| F{"Motor de Reparto ILP"}
+        F -->|"Retorno Capital + ROI (EUR)"| A
+        F -->|"Margen / Utilidad Neta (COP)"| B
+    end
+        </div>
+      </div>
+    </div>
+
+    <!-- DIAGRAMA 2 -->
+    <div class="card">
+      <h2><span>⚡ 2. Secuencia Técnica E2E: Ciclo de 8 Pasos GNAP</span></h2>
+      <p>Secuencia completa entre el cliente Next.js 15, los Server Actions y el nodo de Rafiki Testnet, mostrando descubrimiento, cotización, consentimiento interactivo y pago saliente.</p>
+      <div class="diagram-wrapper">
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Usuario as Financiador / Comprador B2B
+    participant Frontend as BiotaFlow UI (Next.js 15)
+    participant Backend as Server Action (biotaflow.ts)
+    participant ClientSDK as BiotaFlowClient (SDK ILP)
+    participant Rafiki as Nodo Interledger (Rafiki Testnet)
+
+    Usuario->>Frontend: Clic en 'Autorizar Pago'
+    Frontend->>Backend: iniciarDonacion(montoCop, destino, tipo, intervaloIso)
+    Backend->>ClientSDK: Resolver Billetera Receptora
+    ClientSDK->>Rafiki: walletAddress.get(URL_RECEPTOR)
+    Rafiki-->>ClientSDK: Detalles Billetera (authServer, resourceServer)
+    
+    Backend->>ClientSDK: Solicitar Grant Incoming Payment
+    ClientSDK->>Rafiki: grant.request({ incoming-payment })
+    Rafiki-->>ClientSDK: Token no interactivo
+    
+    Backend->>ClientSDK: Crear Factura Entrante (Incoming Payment)
+    ClientSDK->>Rafiki: incomingPayment.create({ incomingAmount: montoCOP })
+    Rafiki-->>ClientSDK: incomingPayment.id
+
+    Backend->>ClientSDK: Solicitar Grant de Quote
+    ClientSDK->>Rafiki: grant.request({ quote })
+    Rafiki-->>ClientSDK: Token de Quote
+    
+    Backend->>ClientSDK: Crear Cotización Multidivisa (EUR -> COP)
+    ClientSDK->>Rafiki: quote.create({ receiver: incomingPayment.id })
+    Rafiki-->>ClientSDK: quote.id + debitAmount (EUR) + receiveAmount (COP)
+
+    Backend->>ClientSDK: Solicitar Grant Interactivo GNAP (Outgoing Payment)
+    ClientSDK->>Rafiki: grant.request({ interact, limits, interval })
+    Rafiki-->>ClientSDK: interact.redirect + continue.uri + continue.token
+    
+    Backend-->>Frontend: { success: true, interactionUrl }
+    
+    Usuario->>Rafiki: Portal Interactivo GNAP (Aprueba débito)
+    Rafiki-->>Frontend: Redirección a /success?interact_ref=...&sid=...
+
+    Frontend->>Backend: completarDonacion(interactRef, sessionId)
+    Backend->>ClientSDK: Continuar Grant GNAP con interact_ref
+    ClientSDK->>Rafiki: grant.continue({ interact_ref }, continue.token)
+    Rafiki-->>ClientSDK: Access Token final para Outgoing Payment
+    
+    Backend->>ClientSDK: Ejecutar Pago Saliente
+    ClientSDK->>Rafiki: outgoingPayment.create({ quoteId })
+    Rafiki-->>ClientSDK: outgoingPayment.id (Transacción confirmada)
+    Backend-->>Frontend: Recibo digital emitido
+    Frontend-->>Usuario: Muestra Recibo y Actualiza Balances ReFi
+        </div>
+      </div>
+    </div>
+
+    <!-- DIAGRAMA 3 -->
+    <div class="card">
+      <h2><span>🔀 3. Arquitectura del Split Payout Automatizado</span></h2>
+      <p>División automática e irrevocable de los fondos provenientes de compras mayoristas B2B entre la billetera internacional del financiador y la billetera local del productor.</p>
+      <div class="diagram-wrapper">
+        <div class="mermaid">
+flowchart LR
+    A["Pago Entrante Mayorista B2B (EUR/USD)"] --> B["Router de Liquidación BiotaFlow"]
+    
+    subgraph Split["División Atómica de Fondos"]
+        B -->|"60% Capital + ROI"| C["Billetera Inversor Global (EUR)"]
+        B -->|"40% Margen Cosecha"| D["Billetera Campesino Productor (COP)"]
+    end
+    
+    C --> E["Recibo de Liquidación Inversor"]
+    D --> F["Abono en Tiempo Real Parcela"]
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      BiotaFlow · Proyecto para Open Payments Hackathon · Interledger Foundation
+    </footer>
+  </div>
+
+</body>
+</html>

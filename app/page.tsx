@@ -617,7 +617,7 @@ export default function Home() {
                     >
                       <div className="space-y-3.5">
                         <div className="relative h-36 rounded-xl overflow-hidden bg-slate-800">
-                          <Image 
+                          <Image unoptimized 
                             src={p.fotoFinca} 
                             alt={p.finca}
                             fill
@@ -818,7 +818,7 @@ export default function Home() {
                 <div key={lote.id} className="rounded-3xl bg-slate-900 text-white border border-slate-800 overflow-hidden flex flex-col justify-between shadow-xl">
                   
                   <div className="relative h-48 bg-slate-800">
-                    <Image 
+                    <Image unoptimized 
                       src={lote.fotoLote} 
                       alt={lote.tituloEs}
                       fill
@@ -995,7 +995,7 @@ export default function Home() {
           <div className="bg-slate-900 text-white w-full max-w-3xl rounded-3xl border border-slate-800 shadow-2xl overflow-hidden my-8 relative">
             
             <div className="relative h-56 bg-slate-800">
-              <Image 
+              <Image unoptimized 
                 src={productorSeleccionado.fotoFinca} 
                 alt={productorSeleccionado.finca}
                 fill

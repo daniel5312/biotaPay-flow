@@ -13,7 +13,7 @@ const getEnv = (key: string) => {
 
 // [OPEN PAYMENTS / GNAP SESSION STORE PERSISTENTE]
 // En Next.js en modo desarrollo, cada Server Action se ejecuta en worker threads aislados de Node.js.
-// Persistimos la sesión temporal en .next/cache/biotaflow-sessions/ para compartir estado entre el inicio
+// Persistimos la sesión temporal en .next/cache/openpayments-gnap-state/ para compartir estado entre el inicio
 // y el callback de redirección de Rafiki (/success).
 interface PaymentSession {
   quoteId: string;
@@ -27,7 +27,7 @@ interface PaymentSession {
   intervaloRecurrente?: string; // ej. R/2026-10-01T00:00:00Z/P1M
 }
 
-const SESSIONS_DIR = path.resolve(process.cwd(), '.next/cache/biotaflow-sessions');
+const SESSIONS_DIR = path.resolve(process.cwd(), '.next/cache/openpayments-gnap-state');
 
 function ensureSessionsDir() {
   if (!fs.existsSync(SESSIONS_DIR)) {

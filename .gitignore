@@ -22,8 +22,8 @@
 *.key
 *.local.pem
 *.local.json
-biotaflow-sessions/
-.next/cache/biotaflow-sessions/
+openpayments-gnap-state/
+.next/cache/openpayments-gnap-state/
 
 # Debug
 npm-debug.log*
